@@ -17,7 +17,7 @@ class CandidatesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create candidate" do
     assert_difference('Candidate.count') do
-      post candidates_url, params: { candidate: {  first_name: @candidate. first_name, email: @candidate.email, last_name: @candidate.last_name } }
+      post candidates_url, params: { candidate: {  first_name: @candidate.first_name, email: @candidate.email, last_name: @candidate.last_name } }
     end
 
     assert_redirected_to candidate_url(Candidate.last)
@@ -34,7 +34,7 @@ class CandidatesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update candidate" do
-    patch candidate_url(@candidate), params: { candidate: {  first_name: @candidate. first_name, email: @candidate.email, last_name: @candidate.last_name } }
+    patch candidate_url(@candidate), params: { candidate: {  first_name: @candidate.first_name, email: @candidate.email, last_name: @candidate.last_name } }
     assert_redirected_to candidate_url(@candidate)
   end
 
