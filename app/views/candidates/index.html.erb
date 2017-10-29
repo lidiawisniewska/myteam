@@ -23,10 +23,11 @@
       <tr>
         <td><%= candidate_avatar(candidate) %></td>
         <td><%= candidate.email %></td>
-        <td><%= candidate.enrichment['name']['givenName'] %></td>
-        <td><%= candidate.enrichment['name']['familyName'] %></td>
-        <td><%= candidate.enrichment %></td>
-        <td><%= candidate.enrichment %></td>
+        <td><%= candidate.first_name %></td>
+        <td><%= candidate.last_name %></td>
+        <td><%= candidate.company %></td>
+        <td><%= candidate.title %></td>
+        <td><%= candidate.role %></td>
         <td><%= candidate_linkedin_url(candidate) %></td>
         <td><%= candidate_facebook_url(candidate) %></td>
         <td><%= candidate_twitter_url(candidate) %></td>
