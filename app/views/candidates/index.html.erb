@@ -21,15 +21,15 @@
   <tbody>
     <% @candidates.each do |candidate| %>
       <tr>
-        <td><%= candidate.enrichment.avatar %></td>
+        <td><%= candidate_avatar(candidate) %></td>
         <td><%= candidate.email %></td>
-        <td><%= candidate.first_name %></td>
-        <td><%= candidate.last_name %></td>
-        <td><%= candidate.enrichment.employment.name %></td>
-        <td><%= candidate.enrichment.employment.role %></td>
-        <td><%= candidate.enrichment.linked.handle %></td>
-        <td><%= candidate.enrichment.facebook.handle %></td>
-        <td><%= candidate.enrichment.twitter.handle %></td>
+        <td><%= candidate.enrichment['name']['givenName'] %></td>
+        <td><%= candidate.enrichment['name']['familyName'] %></td>
+        <td><%= candidate.enrichment %></td>
+        <td><%= candidate.enrichment %></td>
+        <td><%= candidate_linkedin_url(candidate) %></td>
+        <td><%= candidate_facebook_url(candidate) %></td>
+        <td><%= candidate_twitter_url(candidate) %></td>
         <td><%= link_to 'Show', candidate %></td>
         <td><%= link_to 'Edit', edit_candidate_path(candidate) %></td>
         <td><%= link_to 'Destroy', candidate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
