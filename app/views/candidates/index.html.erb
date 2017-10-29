@@ -5,9 +5,15 @@
 <table>
   <thead>
     <tr>
+      <th>Avatar</th>
+      <th>Email</th>
       <th>First name</th>
       <th>Last name</th>
-      <th>Email</th>
+      <th>Employment</th>
+      <th>Role</th>
+      <th>LinkedIn</th>
+      <th>Facebook</th>
+      <th>Twitter</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,9 +21,15 @@
   <tbody>
     <% @candidates.each do |candidate| %>
       <tr>
+        <td><%= candidate.enrichment.avatar %></td>
+        <td><%= candidate.email %></td>
         <td><%= candidate.first_name %></td>
         <td><%= candidate.last_name %></td>
-        <td><%= candidate.email %></td>
+        <td><%= candidate.enrichment.employment.name %></td>
+        <td><%= candidate.enrichment.employment.role %></td>
+        <td><%= candidate.enrichment.linked.handle %></td>
+        <td><%= candidate.enrichment.facebook.handle %></td>
+        <td><%= candidate.enrichment.twitter.handle %></td>
         <td><%= link_to 'Show', candidate %></td>
         <td><%= link_to 'Edit', edit_candidate_path(candidate) %></td>
         <td><%= link_to 'Destroy', candidate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
