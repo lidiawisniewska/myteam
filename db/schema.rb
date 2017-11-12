@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 20171029113017) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "enrichment", default: "", null: false
     t.string "avatar", default: ""
     t.string "bio", default: ""
     t.string "company", default: ""

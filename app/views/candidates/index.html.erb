@@ -26,14 +26,15 @@
         <td><%= candidate.first_name %></td>
         <td><%= candidate.last_name %></td>
         <td><%= candidate.company %></td>
-        <td><%= candidate.title %></td>
-        <td><%= candidate.role %></td>
+        <td><%= candidate_role(candidate)%></td>
         <td><%= candidate_linkedin_url(candidate) %></td>
         <td><%= candidate_facebook_url(candidate) %></td>
         <td><%= candidate_twitter_url(candidate) %></td>
-        <td><%= link_to 'Show', candidate %></td>
-        <td><%= link_to 'Edit', edit_candidate_path(candidate) %></td>
-        <td><%= link_to 'Destroy', candidate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td class = "list_actions">
+          <%= link_to 'Show', candidate %><br/>
+          <%= link_to 'Edit', edit_candidate_path(candidate) %><br/>
+          <%= link_to 'Destroy', candidate, method: :delete, data: { confirm: 'Are you sure?' } %><br/>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -41,4 +42,4 @@
 
 <br>
 
-<%= link_to 'New Candidate', new_candidate_path %>
+<%= link_to 'Add New Candidate', new_candidate_path %>
