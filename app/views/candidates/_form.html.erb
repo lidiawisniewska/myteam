@@ -27,8 +27,13 @@
   </div>
   <div class="field">
     <%= form.label :team %>
-    <%= form.text_field :email, id: :candidate_email %>
+    <%= form.select :team, ['Sales','Marketing','Finance'], :prompt => 'Select the team' %>
   </div>
+
+<!--   <div class="field">
+    <%= form.label :CV %>
+    <%= form.file_field :cv %>
+  </div> -->
 
   <div class="actions">
     <%= form.submit %>
