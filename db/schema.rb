@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171126163940) do
+ActiveRecord::Schema.define(version: 20171127084518) do
 
   create_table "candidates", force: :cascade do |t|
     t.string "first_name"
@@ -27,11 +27,6 @@ ActiveRecord::Schema.define(version: 20171126163940) do
     t.string "facebook", default: ""
     t.string "twitter", default: ""
     t.string "team"
-  end
-
-  create_table "teams", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end
