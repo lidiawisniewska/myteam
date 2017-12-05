@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171127084518) do
+ActiveRecord::Schema.define(version: 20171205162329) do
 
   create_table "candidates", force: :cascade do |t|
     t.string "first_name"
@@ -27,6 +27,10 @@ ActiveRecord::Schema.define(version: 20171127084518) do
     t.string "facebook", default: ""
     t.string "twitter", default: ""
     t.string "team"
+    t.string "cv_file_name"
+    t.string "cv_content_type"
+    t.integer "cv_file_size"
+    t.datetime "cv_updated_at"
   end
 
 end

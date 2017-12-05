@@ -15,7 +15,7 @@
       <th>Facebook</th>
       <th>Twitter</th>
       <th>Team</th>
-      <!-- <th>CV</th> -->
+      <th>CV</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -33,7 +33,7 @@
         <td><%= candidate_facebook_url(candidate) %></td>
         <td><%= candidate_twitter_url(candidate) %></td>
         <td><%= candidate.team %></td>
-<!--         <td>Link to CV</td> -->
+        <td><%= link_to 'CV', candidate.cv.url %></td>
         <td class = "list_actions">
           <%= link_to 'More', candidate %><br/>
           <%= link_to 'Edit', edit_candidate_path(candidate) %><br/>
