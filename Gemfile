@@ -58,3 +58,6 @@ gem 'clearbit'
 
 # paperclip
 gem "paperclip", "~> 5.0.0"
+
+# devise
+gem 'devise', '~> 4.3'
