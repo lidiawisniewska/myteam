@@ -9,47 +9,71 @@ body {
   font-size: 14px;
 }
 
-h1 {
+#logo {
 	color: #1c9fdc;
 	font-family: proxima-nova, sans-serif;
+  font-size: 2em;
+}
+
+#navbar {
+  text-align: right;
+}
+
+
+.row{
+    overflow: hidden; 
+}
+
+[class*="col-"]{
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
 }
 
 div {
   &.field, &.actions {
     margin-bottom: 10px;
   }
-  margin: 10px;
-  display: block;
+  border-style: dotted;
+  border-color: black;
 }
 
 table {
 	border-collapse: collapse;
   padding: 5px;
+  width: 100%;
 }
 
 th {
 	background-color: #def1ff;
-	height: 26px;
-	padding: 10px;
-}
-
-td {
-	width: 8%;
+	height: 3em;
 }
 
 tr:nth-child(even) {
 	background-color: #e6e6e6;
 }
 
+label {
+  display: block;
+}
+
+a {
+  color: #000;
+
+  &:visited {
+    color: #666;
+  }
+
+  &:hover {
+    color: #fff;
+    background-color: #000;
+  }
+}
+
 .avatar {
 	width: 70px;
 	height: 80px;
 	border-radius: 10px;
-}
-
-.list_actions {
-	text-align: right;
-	padding-left: 1em;
+  margin: 10px;
 }
 
 #notice {
@@ -82,34 +106,5 @@ tr:nth-child(even) {
   ul li {
     font-size: 12px;
     list-style: square;
-  }
-}
-
-label {
-  display: block;
-}
-
-p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
-  line-height: 18px;
-}
-
-pre {
-  background-color: #eee;
-  padding: 10px;
-  font-size: 11px;
-}
-
-a {
-  color: #000;
-
-  &:visited {
-    color: #666;
-  }
-
-  &:hover {
-    color: #fff;
-    background-color: #000;
   }
 }
