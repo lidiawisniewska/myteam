@@ -56,7 +56,7 @@ class CandidatesController < ApplicationController
   def destroy
     @candidate.destroy
     respond_to do |format|
-      format.html { redirect_to candidates_url, notice: 'Candidate was successfully destroyed.' }
+      format.html { redirect_to action: "index", notice: 'Candidate was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

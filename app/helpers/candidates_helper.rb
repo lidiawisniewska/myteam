@@ -2,7 +2,7 @@ module CandidatesHelper
 	def candidate_avatar(candidate)
 		return '' if candidate.blank? || candidate.avatar.blank?
 		avatar = candidate.avatar
-		"<img class =\"list_image\" src = \"#{avatar}\">".html_safe
+		"<img class =\"avatar\" src = \"#{avatar}\">".html_safe
 	end
 
 	def candidate_role(candidate)

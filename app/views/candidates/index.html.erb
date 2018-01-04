@@ -1,7 +1,13 @@
 <p id="notice"><%= notice %></p>
-
-<h1>My Candidates</h1>
-
+<div class="container">
+  <div class="navbar-container"> 
+    <h1>myteam</h1>
+        <!-- <%= link_to "Sign Up", new_user_registration_path %> -->
+        <!-- <%= link_to "Sign In", new_user_session_path %> -->
+    <p><%= link_to "Sign Out", new_user_session_path %></p>
+  </div>
+</div>
+<div class ="container">
 <table>
   <thead>
     <tr>
@@ -16,7 +22,7 @@
       <th>Twitter</th>
       <th>Team</th>
       <th>CV</th>
-      <th colspan="3"></th>
+      <th colspan="3">Actions</th>
     </tr>
   </thead>
 
@@ -46,4 +52,5 @@
 
 <br>
 
-<p id = "add-new"><%= link_to 'Add New Candidate', new_candidate_path %></p>
+<p><%= link_to 'Add New Candidate', new_candidate_path %></p>
+</div>
