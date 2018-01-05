@@ -40,7 +40,7 @@
         <td><%= candidate_facebook_url(candidate) %></td>
         <td><%= candidate_twitter_url(candidate) %></td>
         <td><%= candidate.team %></td>
-        <td><%= link_to 'CV', candidate.cv.url %></td>
+        <td><%= link_to 'CV', candidate.cv.url, target: '_blank' %></td>
         <td>
           <%= link_to 'More', candidate %><br/>
           <%= link_to 'Edit', edit_candidate_path(candidate) %><br/>
