@@ -31,6 +31,11 @@
     <%= f.password_field :current_password, autocomplete: "off" %>
   </div>
 
+  <div class="field">
+    <%= f.label :team %>
+    <%= f.select :team, ['Admin','Sales','Marketing','Finance'], :prompt => 'Select your team' %>
+  </div>
+
   <div class="actions">
     <%= f.submit "Update" %>
   </div>

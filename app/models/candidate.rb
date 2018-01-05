@@ -9,4 +9,14 @@ class Candidate < ApplicationRecord
 	after_create do
 		CandidateEnrichment.process(self) unless email.blank?
 	end
+
+	def self.team_picker(current_user)
+		team = current_user.team
+		if team == 'Admin'
+			@candidates = Candidate.all
+		else
+			@candidates = Candidate.where("team = ?", team)
+	    end
+	end
+
 end
