@@ -17,6 +17,8 @@ body {
 
 #navbar {
   text-align: right;
+  font-size: 1em;
+  padding-top: 1em;
 }
 
 
@@ -33,8 +35,8 @@ div {
   &.field, &.actions {
     margin-bottom: 10px;
   }
-  border-style: dotted;
-  border-color: black;
+  /* border-style: dotted; */
+  /* border-color: black; */
 }
 
 table {
