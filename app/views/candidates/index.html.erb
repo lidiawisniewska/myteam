@@ -42,7 +42,7 @@
         <td><%= candidate.team %></td>
         <td><%= link_to 'CV', candidate.cv.url, target: '_blank' %></td>
         <td>
-          <%= link_to 'More', candidate %><br/>
+          <!-- <%= link_to 'More', candidate %><br/> -->
           <%= link_to 'Edit', edit_candidate_path(candidate) %><br/>
           <%= link_to 'Delete', candidate, method: :delete, data: { confirm: 'Are you sure?' } %><br/>
         </td>
