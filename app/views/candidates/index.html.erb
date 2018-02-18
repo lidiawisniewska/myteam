@@ -22,7 +22,7 @@
       <th>Facebook</th>
       <th>Twitter</th>
       <th>Team</th>
-      <!-- <th>CV</th> -->
+      <th>CV</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -40,8 +40,7 @@
         <td><%= candidate_facebook_url(candidate) %></td>
         <td><%= candidate_twitter_url(candidate) %></td>
         <td><%= candidate.team %></td>
-        <%-# CV link not working as problem with paperclip gem-%>
-        <!-- <td><%= link_to 'CV', target: '_blank' %></td> -->
+        <td><%= link_to 'CV', candidate.cv.url, target: '_blank' %></td>
         <td>
           <!-- <%= link_to 'More', candidate %><br/> -->
           <%= link_to 'Edit', edit_candidate_path(candidate) %><br/>
