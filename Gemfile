@@ -57,7 +57,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'clearbit'
 
 # paperclip
-# gem "paperclip", "~> 5.1.0"
+gem 'paperclip', '~> 4.3', '>= 4.3.6'
 
 # devise
 gem 'devise', '~> 4.3'
