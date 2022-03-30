@@ -117,7 +117,8 @@ GEM
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
     public_suffix (3.1.1)
-    puma (3.12.2)
+    puma (4.3.12)
+      nio4r (~> 2.0)
     rack (2.0.8)
     rack-proxy (0.6.5)
       rack
@@ -221,7 +222,7 @@ DEPENDENCIES
   devise (>= 4.6.0)
   jbuilder!
   listen (>= 3.0.5, < 3.2)
-  puma (~> 3.12)
+  puma (~> 4.3)
   rails (~> 5.2)
   sass-rails (~> 5.0)
   selenium-webdriver
