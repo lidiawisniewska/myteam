@@ -1,7 +1,7 @@
 class Candidate < ApplicationRecord
   # ActiveStorage replaces Paperclip for file uploads
   has_one_attached :cv
-  # TODO: re-add content_type validation once active_storage_validations gem is added
+  validates :cv, content_type: ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "text/plain"]
 
   belongs_to :user
 

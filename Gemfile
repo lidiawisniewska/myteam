@@ -25,6 +25,7 @@ gem 'bootsnap', require: false
 
 # File uploads (ActiveStorage is built-in; image_processing needed for variants)
 gem 'image_processing', '~> 1.2'
+gem 'active_storage_validations'
 
 # Auth
 gem 'devise', '>= 4.9'

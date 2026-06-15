@@ -12,3 +12,9 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
+
+# Precompile all JavaScript under app/javascript (Stimulus controllers, etc.)
+# so importmap-rails can resolve pins for files other than application.js.
+Rails.application.config.assets.precompile += [
+  ->(logical_path, filename) { filename.start_with?(Rails.root.join('app/javascript').to_s) }
+]
