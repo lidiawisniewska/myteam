@@ -33,9 +33,6 @@ gem 'devise', '>= 4.9'
 # Bootstrap (v4 via bootstrap-sass, compatible with sassc-rails)
 gem 'bootstrap-sass'
 
-# Clearbit enrichment
-gem 'clearbit'
-
 # Windows tzinfo
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 

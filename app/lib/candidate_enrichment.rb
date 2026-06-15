@@ -1,20 +1,45 @@
-class CandidateEnrichment
-  def self.process(candidate)
-    result = Clearbit::Person.find(email: candidate.email, stream: true)
+require 'net/http'
+require 'json'
 
-    if result
-      candidate.update_columns(first_name: result.name.givenName)
-      candidate.update_columns(last_name: result.name.familyName)
-      candidate.update_columns(avatar: result.avatar)
-      candidate.update_columns(bio: result.bio)
-      candidate.update_columns(company: result.employment.name)
-      candidate.update_columns(role: result.employment.role)
-      candidate.update_columns(linkedin: result.linkedin.handle)
-      candidate.update_columns(facebook: result.facebook.handle)
-      candidate.update_columns(twitter: result.twitter.handle)
-    else
-        Rails.logger.info "No clearbit data found for #{candidate.first_name}"\
-                        " #{candidate.last_name} using #{candidate.email}"
+class CandidateEnrichment
+  ENRICH_URL = 'https://api.peopledatalabs.com/v5/person/enrich'
+
+  def self.process(candidate)
+    api_key = Rails.application.credentials.people_data_labs_api_key
+    if api_key.blank?
+      Rails.logger.info "Skipping People Data Labs enrichment for #{candidate.email}:"\
+                       " no API key configured"
+      return
     end
+
+    uri = URI(ENRICH_URL)
+    uri.query = URI.encode_www_form(email: candidate.email)
+
+    request = Net::HTTP::Get.new(uri)
+    request['X-API-Key'] = api_key
+
+    response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) { |http| http.request(request) }
+
+    case response
+    when Net::HTTPSuccess
+      data = JSON.parse(response.body)['data']
+      candidate.update_columns({
+        first_name: data['first_name'],
+        last_name: data['last_name'],
+        company: data['job_company_name'],
+        role: data['job_title'],
+        linkedin: data['linkedin_username'],
+        facebook: data['facebook_username'],
+        twitter: data['twitter_username'],
+      }.compact)
+    when Net::HTTPNotFound
+      Rails.logger.info "No People Data Labs data found for #{candidate.first_name}"\
+                       " #{candidate.last_name} using #{candidate.email}"
+    else
+      Rails.logger.error "People Data Labs enrichment failed for #{candidate.email}:"\
+                        " #{response.code} #{response.message}"
+    end
+  rescue StandardError => e
+    Rails.logger.error "People Data Labs enrichment error for #{candidate.email}: #{e.message}"
   end
 end
