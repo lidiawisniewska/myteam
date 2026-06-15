@@ -1,1 +1,1 @@
-Clearbit.key = ENV['CLEARBIT_API_KEY']
+Clearbit.key = Rails.application.credentials.clearbit_api_key

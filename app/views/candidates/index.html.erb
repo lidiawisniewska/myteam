@@ -1,14 +1,14 @@
 <div class="container">
   <p class="notice"><%= notice %></p>
-  <div class="row"> 
+  <div class="row">
     <div class="col-md-6 logo">myteam</div>
-        <!-- <%= link_to "Sign Up", new_user_registration_path %> -->
-        <!-- <%= link_to "Sign In", new_user_session_path %> -->
-    <div class="col-md-6" id= "navbar"><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></div>
+    <div class="col-md-6" id="navbar">
+      <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-link" %>
+    </div>
   </div>
 </div>
 
-<div class ="container">
+<div class="container">
 <table>
   <thead>
     <tr>
@@ -35,16 +35,23 @@
         <td><%= candidate.first_name %></td>
         <td><%= candidate.last_name %></td>
         <td><%= candidate.company %></td>
-        <td><%= candidate_role(candidate)%></td>
+        <td><%= candidate_role(candidate) %></td>
         <td><%= candidate_linkedin_url(candidate) %></td>
         <td><%= candidate_facebook_url(candidate) %></td>
         <td><%= candidate_twitter_url(candidate) %></td>
         <td><%= candidate.team %></td>
-        <td><%= link_to 'CV', candidate.cv.url, target: '_blank' %></td>
         <td>
-          <!-- <%= link_to 'More', candidate %><br/> -->
+          <% if candidate.cv.attached? %>
+            <%= link_to 'CV', rails_blob_path(candidate.cv, disposition: 'attachment'), target: '_blank' %>
+          <% else %>
+            n/a
+          <% end %>
+        </td>
+        <td>
           <%= link_to 'Edit', edit_candidate_path(candidate) %><br/>
-          <%= link_to 'Delete', candidate, method: :delete, data: { confirm: 'Are you sure?' } %><br/>
+          <%= button_to 'Delete', candidate, method: :delete,
+                data: { turbo_confirm: 'Are you sure?' },
+                class: "btn btn-link" %><br/>
         </td>
       </tr>
     <% end %>

@@ -1,22 +1,20 @@
 class Candidate < ApplicationRecord
-	# before_save do
-	# 	self.enrichment = '' if enrichment.blank?
-	# end
-	has_attached_file :cv
-	validates_attachment_content_type :cv, content_type: ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "text/plain"]
-	belongs_to :user
+  # ActiveStorage replaces Paperclip for file uploads
+  has_one_attached :cv
+  # TODO: re-add content_type validation once active_storage_validations gem is added
 
-	after_create do
-		CandidateEnrichment.process(self) unless email.blank?
-	end
+  belongs_to :user
 
-	def self.team_picker(current_user)
-		team = current_user.team
-		if team == 'Admin'
-			@candidates = Candidate.all
-		else
-			@candidates = Candidate.where("team = ?", team)
-	    end
-	end
+  after_create do
+    CandidateEnrichment.process(self) unless email.blank?
+  end
 
+  def self.team_picker(current_user)
+    team = current_user.team
+    if team == 'Admin'
+      Candidate.all
+    else
+      Candidate.where("team = ?", team)
+    end
+  end
 end
