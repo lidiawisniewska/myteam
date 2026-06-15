@@ -11,10 +11,11 @@ class Candidate < ApplicationRecord
 
   def self.team_picker(current_user)
     team = current_user.team
-    if team == 'Admin'
+    scope = if team == 'Admin'
       Candidate.all
     else
       Candidate.where("team = ?", team)
     end
+    scope.with_attached_cv
   end
 end
