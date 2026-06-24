@@ -1,6 +1,27 @@
-<h1>myteam</h1>
-<p>myteam is a web-based application for in-house recruitment.</p>
-<p>Key features:<br>
-  &#x25E6 Store all applications in one place - no more missing CVs and messy paperwork.<br>
-  &#x25E6 Get extra info about the candidate using only their email address, including LinkedIn, Facebook and Twitter links.<br>
-  &#x25E6 Easy flow of applications between recrutiment/HR and management.</p>
+# myteam
+
+myteam is a web-based applicant tracking system built with Ruby on Rails, 
+designed to streamline in-house recruitment workflows.
+
+## Features
+
+- **Centralised candidate management** — all applications and CVs stored in 
+  one place, accessible to the whole team
+- **Automatic profile enrichment** — retrieve LinkedIn, Facebook, and Twitter 
+  profiles for any candidate via the People Data Labs API using just their 
+  email address
+- **Pipeline management** — move candidates seamlessly between recruitment, 
+  HR, and management stages
+
+## Tech stack
+
+- Ruby on Rails 8
+- Hotwire (Turbo + Stimulus)
+- Devise (authentication)
+- Active Storage (file uploads)
+- People Data Labs API (candidate enrichment)
+- Capybara & Selenium (integration testing)
+
+## Background
+
+Built as a final project for [CS50](https://cs50.harvard.edu/).
