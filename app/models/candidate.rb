@@ -5,8 +5,10 @@ class Candidate < ApplicationRecord
 
   belongs_to :user
 
-  after_create do
-    CandidateEnrichment.process(self) unless email.blank?
+  # Enrich the profile in the background so creating a candidate doesn't
+  # block on an external API call.
+  after_create_commit do
+    CandidateEnrichmentJob.perform_later(id) if email.present?
   end
 
   def self.team_picker(current_user)

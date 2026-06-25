@@ -18,7 +18,10 @@ class CandidateEnrichment
     request = Net::HTTP::Get.new(uri)
     request['X-API-Key'] = api_key
 
-    response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) { |http| http.request(request) }
+    response = Net::HTTP.start(uri.host, uri.port, use_ssl: true,
+                               open_timeout: 5, read_timeout: 10) do |http|
+      http.request(request)
+    end
 
     case response
     when Net::HTTPSuccess
