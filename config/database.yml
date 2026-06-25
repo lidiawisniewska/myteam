@@ -1,27 +1,28 @@
-# SQLite version 3.x
-#   gem install sqlite3
+# PostgreSQL is used in every environment.
 #
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
-#
+# Local connection details come from the standard libpq environment variables
+# (PGHOST, PGUSER, PGPASSWORD, PGPORT). With a default local Postgres install
+# (e.g. Homebrew) the defaults usually just work. Override via those env vars
+# if your local Postgres needs an explicit user/password.
 default: &default
-  adapter: sqlite3
+  adapter: postgresql
+  encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
+  host: <%= ENV.fetch("PGHOST", "localhost") %>
+  username: <%= ENV.fetch("PGUSER", ENV["USER"]) %>
+  password: <%= ENV["PGPASSWORD"] %>
 
 development:
   <<: *default
-  database: db/development.sqlite3
+  database: myteam_development
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
+# The test database is wiped and rebuilt between test runs — keep it separate.
 test:
   <<: *default
-  database: db/test.sqlite3
+  database: myteam_test
 
-# Production uses PostgreSQL on Railway, configured via the DATABASE_URL
-# environment variable that the Railway Postgres add-on provides.
+# Production uses the DATABASE_URL provided by the Railway Postgres add-on,
+# which supplies host, credentials, and database name in one value.
 production:
   adapter: postgresql
   encoding: unicode

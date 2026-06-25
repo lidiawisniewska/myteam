@@ -5,8 +5,9 @@ PostgreSQL and auto-deploys from GitHub.
 
 ## What's already set up in the repo
 
-- **PostgreSQL in production** — `pg` gem (production group), `sqlite3` for
-  local dev/test only. `config/database.yml` reads `DATABASE_URL` in production.
+- **PostgreSQL in every environment** — `pg` gem for dev/test/production (dev/prod
+  parity). `config/database.yml` uses local Postgres for dev/test and
+  `DATABASE_URL` in production.
 - **`Procfile`** — runs `rails db:prepare` (creates/migrates the DB) then boots Puma.
 - **`config/environments/production.rb`** — serves static assets via Puma,
   forces SSL behind Railway's proxy (`assume_ssl` + `force_ssl`), logs to STDOUT.
@@ -14,30 +15,31 @@ PostgreSQL and auto-deploys from GitHub.
 
 ---
 
-## 1. One-time local step: update the lockfile, then push
+## 1. One-time local step: move local dev to Postgres, then push
 
-The Gemfile changed (added `pg`, pinned Ruby), so refresh `Gemfile.lock` and push.
+The app now uses PostgreSQL everywhere, so set it up locally too.
 
 ```bash
+# Install + start Postgres (macOS / Homebrew)
+brew install postgresql@16
+brew services start postgresql@16
+
 # Add the Linux platform so Railway can resolve native gems (e.g. pg)
 bundle lock --add-platform x86_64-linux
-
 bundle install
+
+# Create and seed your local Postgres database
+bin/rails db:create db:migrate db:seed
+bin/rails server   # check http://localhost:3000 works on Postgres
 ```
 
-If `bundle install` fails locally because PostgreSQL isn't installed (pg needs
-`libpq`), you don't need Postgres locally — just skip building it while still
-writing it to the lock:
-
-```bash
-bundle config set --local without 'production'
-bundle install            # updates Gemfile.lock with pg, without compiling it
-```
+If your local Postgres needs an explicit user/password, set `PGUSER` /
+`PGPASSWORD` (and `PGHOST` if not localhost) — `database.yml` reads them.
 
 Then commit and push to GitHub:
 
 ```bash
-git add -A && git commit -m "Configure app for Railway/Postgres deploy"
+git add -A && git commit -m "Use PostgreSQL in all environments; configure Railway deploy"
 git push origin master
 ```
 
@@ -57,7 +59,7 @@ git push origin master
 | `DATABASE_URL` | `${{Postgres.DATABASE_URL}}` | Reference variable linking the app to the Postgres add-on. |
 | `RAILS_ENV` | `production` | Run in production mode. |
 | `RAILS_LOG_TO_STDOUT` | `true` | So logs show up in Railway. |
-| `BUNDLE_WITHOUT` | `development:test` | Skip dev/test gems at build (don't compile sqlite3 in prod). |
+| `BUNDLE_WITHOUT` | `development:test` | Skip dev/test-only gems (byebug, capybara, selenium, web-console) at build. |
 
 > If you ever see a `secret_key_base` error, it means credentials didn't load.
 > Fallback: generate one with `bin/rails secret` and set it as `SECRET_KEY_BASE`.
