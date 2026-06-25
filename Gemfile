@@ -12,7 +12,10 @@ gem 'puma', '>= 5.0'
 
 # Asset pipeline
 gem 'sprockets-rails'
-gem 'sassc-rails'
+# dartsass-sprockets compiles .scss via the prebuilt Dart Sass binary
+# (sass-embedded). Replaces the abandoned sassc/libsass, which segfaults
+# during assets:precompile on Ruby 3.4 in the Linux build image.
+gem 'dartsass-sprockets'
 
 # JavaScript
 gem 'importmap-rails'
