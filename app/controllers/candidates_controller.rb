@@ -63,8 +63,11 @@ class CandidatesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    # Scope by the current user's team so people can't view/edit/delete
+    # candidates outside their team via the URL (Admins see everything).
+    # Out-of-team ids raise RecordNotFound (404) rather than leaking data.
     def set_candidate
-      @candidate = Candidate.find(params[:id])
+      @candidate = Candidate.team_picker(current_user).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

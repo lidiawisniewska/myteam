@@ -14,7 +14,7 @@ class Candidate < ApplicationRecord
     scope = if team == 'Admin'
       Candidate.all
     else
-      Candidate.where("team = ?", team)
+      Candidate.where(team: team)
     end
     scope.with_attached_cv
   end
