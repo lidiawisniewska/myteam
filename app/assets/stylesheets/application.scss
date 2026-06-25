@@ -1,5 +1,2 @@
-// Application stylesheet.
-// Order matters: Bootstrap first (grid/reset), then our design system on top.
-@import "bootstrap-sprockets";
-@import "bootstrap";
+// Application stylesheet — the MyTeam design system.
 @import "theme";
