@@ -1,8 +1,15 @@
-<div class="container">
-	<h1>Editing Candidate</h1>
+<% content_for :title, "Edit candidate" %>
 
-	<%= render 'form', candidate: @candidate %>
+<div class="page-head">
+  <div>
+    <%= link_to candidate_path(@candidate), class: "btn btn--link" do %>← Back to profile<% end %>
+    <h1 style="margin-top:6px;">Edit <%= candidate_display_name(@candidate) %></h1>
+    <div class="sub">Update this candidate's details.</div>
+  </div>
+</div>
 
-	<%= link_to 'Show', @candidate %> |
-	<%= link_to 'Back', candidates_path %>
+<div class="card form-card">
+  <div class="card__body">
+    <%= render 'form', candidate: @candidate %>
+  </div>
 </div>

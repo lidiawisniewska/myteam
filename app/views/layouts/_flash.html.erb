@@ -1,0 +1,12 @@
+<% flash.each do |type, message| %>
+  <% next if message.blank? %>
+  <% kind = type.to_s == 'alert' ? 'alert' : 'notice' %>
+  <div class="flash flash--<%= kind %>">
+    <% if kind == 'notice' %>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+    <% else %>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+    <% end %>
+    <span><%= message %></span>
+  </div>
+<% end %>

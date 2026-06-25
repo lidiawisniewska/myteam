@@ -1,64 +1,100 @@
-<div class="container">
-  <p class="notice"><%= notice %></p>
-  <div class="row">
-    <div class="col-md-6 logo">myteam</div>
-    <div class="col-md-6" id="navbar">
-      <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-link" %>
-    </div>
+<% content_for :title, "Candidates" %>
+
+<div class="page-head">
+  <div>
+    <h1>Candidates</h1>
+    <div class="sub"><%= pluralize(@candidates.size, "candidate") %> in your pipeline<%= " · #{current_user.team} team" unless current_user.team == 'Admin' %></div>
   </div>
 </div>
 
-<div class="container">
-<table>
-  <thead>
-    <tr>
-      <th>Avatar</th>
-      <th>Email</th>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Employment</th>
-      <th>Role</th>
-      <th>LinkedIn</th>
-      <th>Facebook</th>
-      <th>Twitter</th>
-      <th>Team</th>
-      <th>CV</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
+<div class="stats">
+  <div class="stat">
+    <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+    <div class="label">Total candidates</div>
+    <div class="value"><%= @candidates.size %></div>
+  </div>
+  <div class="stat">
+    <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+    <div class="label">With CV</div>
+    <div class="value"><%= @candidates.count { |c| c.cv.attached? } %></div>
+  </div>
+  <div class="stat">
+    <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+    <div class="label">Enriched profiles</div>
+    <div class="value"><%= @candidates.count { |c| c.avatar.present? || c.company.present? } %></div>
+  </div>
+  <div class="stat">
+    <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg></div>
+    <div class="label">Teams</div>
+    <div class="value"><%= @candidates.map(&:team).compact.uniq.size %></div>
+  </div>
+</div>
 
-  <tbody>
-    <% @candidates.each do |candidate| %>
-      <tr>
-        <td><%= candidate_avatar(candidate) %></td>
-        <td><%= candidate.email %></td>
-        <td><%= candidate.first_name %></td>
-        <td><%= candidate.last_name %></td>
-        <td><%= candidate.company %></td>
-        <td><%= candidate_role(candidate) %></td>
-        <td><%= candidate_linkedin_url(candidate) %></td>
-        <td><%= candidate_facebook_url(candidate) %></td>
-        <td><%= candidate_twitter_url(candidate) %></td>
-        <td><%= candidate.team %></td>
-        <td>
-          <% if candidate.cv.attached? %>
-            <%= link_to 'CV', rails_blob_path(candidate.cv, disposition: 'attachment'), target: '_blank' %>
-          <% else %>
-            n/a
+<div class="card">
+  <div class="card__head">
+    <h3>All candidates</h3>
+    <%= link_to "Add candidate", new_candidate_path, class: "btn btn--primary btn--sm" %>
+  </div>
+
+  <% if @candidates.any? %>
+    <div class="table-wrap">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Candidate</th>
+            <th>Role</th>
+            <th>Company</th>
+            <th>Team</th>
+            <th>Social</th>
+            <th>CV</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @candidates.each do |candidate| %>
+            <tr>
+              <td>
+                <div class="person">
+                  <%= candidate_avatar(candidate) %>
+                  <div class="who">
+                    <div class="nm"><%= link_to candidate_display_name(candidate), candidate_path(candidate) %></div>
+                    <div class="em"><%= candidate.email %></div>
+                  </div>
+                </div>
+              </td>
+              <td><%= candidate_role(candidate) %></td>
+              <td><%= candidate.company.presence || content_tag(:span, "—", class: "muted") %></td>
+              <td><%= team_badge(candidate.team) %></td>
+              <td><%= candidate_socials(candidate) %></td>
+              <td>
+                <% if candidate.cv.attached? %>
+                  <%= link_to rails_blob_path(candidate.cv, disposition: 'attachment'), class: "badge badge--slate", target: "_blank" do %>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg>
+                    CV
+                  <% end %>
+                <% else %>
+                  <span class="muted">—</span>
+                <% end %>
+              </td>
+              <td>
+                <div class="row-actions">
+                  <%= link_to "Edit", edit_candidate_path(candidate), class: "btn btn--ghost btn--sm" %>
+                  <%= button_to "Delete", candidate, method: :delete,
+                        class: "btn btn--danger btn--sm",
+                        form: { data: { turbo_confirm: "Delete #{candidate_display_name(candidate)}?" } } %>
+                </div>
+              </td>
+            </tr>
           <% end %>
-        </td>
-        <td>
-          <%= link_to 'Edit', edit_candidate_path(candidate) %><br/>
-          <%= button_to 'Delete', candidate, method: :delete,
-                data: { turbo_confirm: 'Are you sure?' },
-                class: "btn btn-link" %><br/>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<p><%= link_to 'Add New Candidate', new_candidate_path %></p>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+      <h3>No candidates yet</h3>
+      <p>Add your first candidate and we'll enrich their profile automatically.</p>
+      <p style="margin-top:16px;"><%= link_to "Add candidate", new_candidate_path, class: "btn btn--primary" %></p>
+    </div>
+  <% end %>
 </div>

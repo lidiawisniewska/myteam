@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Myteam</title>
+    <title>MyTeam — Applicant Tracking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
     <%= javascript_importmap_tags %>
@@ -11,7 +16,31 @@
   </head>
 
   <body>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <% if user_signed_in? && !devise_controller? %>
+      <div class="app">
+        <%= render 'layouts/sidebar' %>
+        <div class="main">
+          <header class="topbar">
+            <div class="topbar__title"><%= content_for?(:title) ? yield(:title) : 'Candidates' %></div>
+            <div class="topbar__spacer"></div>
+            <label class="search">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input type="search" placeholder="Search candidates…" aria-label="Search">
+            </label>
+            <%= link_to new_candidate_path, class: 'btn btn--primary' do %>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              Add candidate
+            <% end %>
+          </header>
+
+          <main class="content">
+            <%= render 'layouts/flash' %>
+            <%= yield %>
+          </main>
+        </div>
+      </div>
+    <% else %>
+      <%= yield %>
+    <% end %>
   </body>
 </html>

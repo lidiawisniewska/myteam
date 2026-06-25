@@ -1,37 +1,64 @@
-<div class="container">
-  <div class="logo">myteam</div>
-  <h2>Sign up</h2>
-
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= devise_error_messages! %>
-
-    <div class="field">
-      <%= f.label :email %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "off" %>
+<div class="auth">
+  <aside class="auth__aside">
+    <div class="auth__brand"><span class="dot">M</span> MyTeam</div>
+    <div class="auth__pitch">
+      <h2>Build your hiring pipeline in minutes.</h2>
+      <p>Create an account, pick your team, and start adding candidates. We handle the enrichment so you can focus on people.</p>
+      <ul class="auth__points">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Free to get started</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Auto-enriched candidate profiles</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Organized by team</li>
+      </ul>
     </div>
+    <div class="auth__foot">© <%= Date.current.year %> MyTeam</div>
+  </aside>
 
-    <div class="field">
-      <%= f.label :password %>
-      <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em>
-      <% end %><br />
-      <%= f.password_field :password, autocomplete: "off" %>
+  <main class="auth__main">
+    <div class="auth__form">
+      <h1>Create your account</h1>
+      <p class="sub">Get started with MyTeam.</p>
+
+      <%= render 'layouts/flash' %>
+
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <% if resource.errors.any? %>
+          <div class="error-box">
+            <strong><%= pluralize(resource.errors.count, "error") %> stopped sign up:</strong>
+            <ul style="margin:8px 0 0; padding-left:18px;">
+              <% resource.errors.full_messages.each do |m| %><li><%= m %></li><% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="field">
+          <%= f.label :email %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "you@company.com" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password %>
+          <% if @minimum_password_length %>
+            <span class="hint"><%= @minimum_password_length %> characters minimum</span>
+          <% end %>
+          <%= f.password_field :password, autocomplete: "new-password", placeholder: "••••••••" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password_confirmation, "Confirm password" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "••••••••" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :team %>
+          <%= f.select :team, ['Admin', 'Sales', 'Marketing', 'Finance'], { prompt: 'Select your team' } %>
+        </div>
+
+        <%= f.submit "Sign up", class: "btn btn--primary" %>
+      <% end %>
+
+      <div class="auth__links">
+        <%= render "devise/shared/links" %>
+      </div>
     </div>
-
-    <div class="field">
-      <%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "off" %>
-    </div>
-
-    <div class="field">
-      <%= f.label :team %>
-      <%= f.select :team, ['Admin','Sales','Marketing','Finance'], :prompt => 'Select your team' %>
-    </div>
-
-    <div class="actions">
-      <%= f.submit "Sign up" %>
-    </div>
-  <% end %>
-
-  <%= render "devise/shared/links" %>
+  </main>
 </div>

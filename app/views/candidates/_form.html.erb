@@ -1,42 +1,36 @@
-<%= form_for @candidate, html: { multipart: true } do |form| %>
+<%= form_with model: candidate, local: true, html: { multipart: true } do |form| %>
   <% if candidate.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(candidate.errors.count, "error") %> prohibited this candidate from being saved:</h2>
-
       <ul>
-      <% candidate.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% candidate.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-<!--   <div class="field">
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name, id: :candidate_first_name %>
-  </div> -->
+  <div class="form-grid">
+    <div class="field">
+      <%= form.label :email, "Email address" %>
+      <span class="hint">We use this to automatically enrich the candidate's profile.</span>
+      <%= form.email_field :email, id: :candidate_email, autocomplete: :off, placeholder: "jane@company.com" %>
+    </div>
 
-<!--   <div class="field">
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name, id: :candidate_last_name %>
-  </div> -->
+    <div class="field">
+      <%= form.label :team %>
+      <%= form.select :team, ['Sales', 'Marketing', 'Finance'], { prompt: 'Select a team' } %>
+    </div>
 
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email, id: :candidate_email, autocomplete: :off %>
-  </div>
+    <div class="field">
+      <%= form.label :cv, "CV / Résumé" %>
+      <span class="hint">PDF, Word or plain text.</span>
+      <%= form.file_field :cv %>
+    </div>
 
-  <div class="field">
-    <%= form.label :team %>
-    <%= form.select :team, ['Sales','Marketing','Finance'], :prompt => 'Select the team' %>
-  </div>
-
-  <div class="field">
-    <%= form.label :cv %>
-    <%= form.file_field :cv %>
-  </div> -->
-
-  <div class="actions">
-    <%= form.submit %>
+    <div class="actions">
+      <%= form.submit candidate.persisted? ? "Save changes" : "Add candidate", class: "btn btn--primary" %>
+      <%= link_to "Cancel", (candidate.persisted? ? candidate_path(candidate) : candidates_path), class: "btn btn--ghost" %>
+    </div>
   </div>
 <% end %>

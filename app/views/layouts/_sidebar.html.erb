@@ -1,0 +1,29 @@
+<aside class="sidebar">
+  <div class="sidebar__brand">
+    <span class="dot">M</span> MyTeam
+  </div>
+
+  <div class="sidebar__label">Recruiting</div>
+  <%= link_to candidates_path, class: "nav-item #{'is-active' if controller_name == 'candidates' && action_name == 'index'}" do %>
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    Candidates
+  <% end %>
+  <%= link_to new_candidate_path, class: "nav-item #{'is-active' if controller_name == 'candidates' && %w[new create edit update].include?(action_name)}" do %>
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="11" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+    Add candidate
+  <% end %>
+
+  <div class="sidebar__foot">
+    <div class="sidebar__user">
+      <span class="avatar-fallback"><%= user_initials(current_user.email) %></span>
+      <div class="meta">
+        <div class="name"><%= current_user.email.split('@').first %></div>
+        <div class="sub"><%= current_user.team %> team</div>
+      </div>
+    </div>
+    <%= button_to destroy_user_session_path, method: :delete, class: 'btn btn--ghost btn--sm', style: 'width:100%;margin-top:8px;' do %>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      Sign out
+    <% end %>
+  </div>
+</aside>

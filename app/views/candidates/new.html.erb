@@ -1,8 +1,15 @@
-<div class="container">
-	<div class="logo">myteam</div>
-	<h1>New Candidate</h1>
+<% content_for :title, "Add candidate" %>
 
-	<%= render 'form', candidate: @candidate %>
+<div class="page-head">
+  <div>
+    <%= link_to candidates_path, class: "btn btn--link" do %>← Back to candidates<% end %>
+    <h1 style="margin-top:6px;">Add a candidate</h1>
+    <div class="sub">Enter an email and we'll enrich the rest of the profile automatically.</div>
+  </div>
+</div>
 
-	<%= link_to 'Back', candidates_path %>
+<div class="card form-card">
+  <div class="card__body">
+    <%= render 'form', candidate: @candidate %>
+  </div>
 </div>

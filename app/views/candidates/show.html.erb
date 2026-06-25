@@ -1,26 +1,63 @@
-<div class="container">
-	<p id="notice"><%= notice %></p>
+<% content_for :title, "Candidate profile" %>
 
-	<p>
-	  <strong> First name:</strong>
-	  <%= @candidate.first_name %>
-	</p>
+<div class="page-head">
+  <div>
+    <%= link_to candidates_path, class: "btn btn--link" do %>← Back to candidates<% end %>
+    <h1 style="margin-top:6px;"><%= candidate_display_name(@candidate) %></h1>
+    <div class="sub"><%= candidate_role(@candidate) %><%= " · #{@candidate.company}" if @candidate.company.present? %></div>
+  </div>
+  <%= link_to "Edit profile", edit_candidate_path(@candidate), class: "btn btn--ghost" %>
+</div>
 
-	<p>
-	  <strong>Last name:</strong>
-	  <%= @candidate.last_name %>
-	</p>
+<div class="profile-grid">
+  <div class="card">
+    <div class="card__body profile-card">
+      <%= candidate_avatar(@candidate, large: true) %>
+      <div class="name"><%= candidate_display_name(@candidate) %></div>
+      <div class="role"><%= candidate_role(@candidate) %></div>
+      <div class="pills">
+        <%= team_badge(@candidate.team) %>
+      </div>
+      <div class="cta">
+        <% if @candidate.cv.attached? %>
+          <%= link_to "Download CV", rails_blob_path(@candidate.cv, disposition: 'attachment'), class: "btn btn--primary btn--sm", target: "_blank" %>
+        <% end %>
+        <%= link_to "Edit", edit_candidate_path(@candidate), class: "btn btn--ghost btn--sm" %>
+      </div>
+    </div>
+  </div>
 
-	<p>
-	  <strong>Email:</strong>
-	  <%= @candidate.email %>
-	</p>
+  <div style="display:flex; flex-direction:column; gap:24px;">
+    <div class="card">
+      <div class="card__head"><h3>Details</h3></div>
+      <div class="card__body">
+        <dl class="def-list">
+          <dt>Email</dt>      <dd><%= mail_to @candidate.email %></dd>
+          <dt>Company</dt>    <dd><%= @candidate.company.presence || content_tag(:span, "—", class: "muted") %></dd>
+          <dt>Role</dt>       <dd><%= candidate_role(@candidate) %></dd>
+          <dt>Team</dt>       <dd><%= team_badge(@candidate.team) %></dd>
+          <dt>Social</dt>     <dd><%= candidate_socials(@candidate) %></dd>
+          <dt>CV</dt>
+          <dd>
+            <% if @candidate.cv.attached? %>
+              <%= link_to "Download", rails_blob_path(@candidate.cv, disposition: 'attachment'), target: "_blank" %>
+            <% else %>
+              <span class="muted">Not uploaded</span>
+            <% end %>
+          </dd>
+        </dl>
+      </div>
+    </div>
 
-	<p>
-	  <strong>Bio:</strong>
-	  <%= @candidate.bio %>
-	</p>
-
-	<%= link_to 'Edit', edit_candidate_path(@candidate) %> |
-	<%= link_to 'Back', candidates_path %>
+    <div class="card">
+      <div class="card__head"><h3>Bio</h3></div>
+      <div class="card__body">
+        <% if @candidate.bio.present? %>
+          <p class="bio"><%= @candidate.bio %></p>
+        <% else %>
+          <p class="muted">No bio available yet. Enrichment fills this in automatically when data is found.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
