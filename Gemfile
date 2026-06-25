@@ -15,7 +15,7 @@ gem 'sprockets-rails'
 # dartsass-sprockets compiles .scss via the prebuilt Dart Sass binary
 # (sass-embedded). Replaces the abandoned sassc/libsass, which segfaults
 # during assets:precompile on Ruby 3.4 in the Linux build image.
-gem 'dartsass-sprockets'
+gem 'dartsass-sprockets', '~> 3.2'
 
 # JavaScript
 gem 'importmap-rails'
