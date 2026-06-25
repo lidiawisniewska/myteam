@@ -20,6 +20,10 @@ test:
   <<: *default
   database: db/test.sqlite3
 
+# Production uses PostgreSQL on Railway, configured via the DATABASE_URL
+# environment variable that the Railway Postgres add-on provides.
 production:
-  <<: *default
-  database: db/production.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: <%= ENV["DATABASE_URL"] %>
