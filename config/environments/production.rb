@@ -45,6 +45,12 @@ Rails.application.configure do
   # config.action_cable.url = 'wss://example.com/cable'
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
+  # Allow Rails host authorization to accept Railway's generated domain
+  # (*.railway.app) and the public domain Railway injects at runtime. Add any
+  # custom domains here as well.
+  config.hosts << '.railway.app'
+  config.hosts << ENV['RAILWAY_PUBLIC_DOMAIN'] if ENV['RAILWAY_PUBLIC_DOMAIN'].present?
+
   # Railway terminates TLS at its edge and forwards the request over HTTP with
   # an X-Forwarded-Proto: https header. assume_ssl tells Rails the original
   # request was secure; force_ssl then redirects http→https and uses secure cookies + HSTS.
